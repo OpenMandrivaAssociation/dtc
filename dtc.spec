@@ -1,6 +1,6 @@
 %define api 1
 %define major   4
-%define libname %mklibname dft %{api} %{major}
+%define libname %mklibname fdt %{api} %{major}
 %define devname %mklibname -d fdt %{api}
 
 Name:		dtc
@@ -11,7 +11,7 @@ Group:		Development/Other
 License:	GPLv2+
 URL:		http://git.jdl.com/gitweb/?p=dtc.git;a=summary
 Source0:	http://www.jdl.com/software/dtc-v%{version}.tgz
-Patch1:		use-tx-as-the-type-specifier-instead-of-zx.patch
+Patch0:		use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -32,15 +32,15 @@ architectures.
 Summary:	Development headers for device tree library
 Group:		System/Libraries
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release
+Provides:	%{name}-devel = %{version}-%{release}
 Provides:	fdt-devel = %{version}-%{release}
 
 %description -n	%{devname}
 This package provides development files for libfdt
 
 %prep
-%setup -q -n dtc-v%{version}
-%patch1 -p1
+%setup -qn dtc-v%{version}
+%apply_patches
 
 %build
 %make
