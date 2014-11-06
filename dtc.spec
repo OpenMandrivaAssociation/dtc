@@ -5,7 +5,7 @@
 
 Name:		dtc
 Version:	1.4.0
-Release:	7
+Release:	8
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
@@ -43,7 +43,7 @@ This package provides development files for libfdt
 %apply_patches
 
 %build
-%make
+%make CC=gcc
 
 %install
 %makeinstall_std PREFIX=/usr LIBDIR=%{_libdir}
