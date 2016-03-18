@@ -4,13 +4,13 @@
 %define devname %mklibname -d fdt %{api}
 
 Name:		dtc
-Version:	1.4.0
-Release:	10
+Version:	1.4.1
+Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
-URL:		http://git.jdl.com/gitweb/?p=dtc.git;a=summary
-Source0:	http://www.jdl.com/software/dtc-v%{version}.tgz
+URL:		http://devicetree.org/Device_Tree_Compiler
+Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.xz
 Patch0:		use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires:	bison
@@ -39,10 +39,18 @@ Provides:	fdt-devel = %{version}-%{release}
 This package provides development files for libfdt
 
 %prep
-%setup -qn dtc-v%{version}
+%setup -q
 %apply_patches
 
 %build
+sed -i \
+	-e '/^CFLAGS =/s:=:+= %{optflags}:' \
+	-e '/^CPPFLAGS =/s:=:+=:' \
+	-e '/^WARNINGS =/s:=:+=:' \
+	-e "/^PREFIX =/s:=.*:= %{_prefix}:" \
+	-e "/^LIBDIR =/s:=.*:= \%{_libdir}:" \
+	Makefile
+
 %make CC=gcc
 
 %install
