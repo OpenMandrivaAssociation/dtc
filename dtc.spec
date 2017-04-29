@@ -4,7 +4,7 @@
 %define devname %mklibname -d fdt %{api}
 
 Name:		dtc
-Version:	1.4.1
+Version:	1.4.4
 Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
@@ -18,7 +18,8 @@ BuildRequires:	flex
 
 %description
 The Device Tree Compiler generates flattened Open Firmware style device trees
-for use with PowerPC machines that lack an Open Firmware implementation
+for use with PowerPC machines that lack an Open Firmware implementation and
+ARM/AArch64 devices that don't implement UEFI.
 
 %package -n	%{libname}
 Summary:	Device tree library
@@ -51,7 +52,9 @@ sed -i \
 	-e "/^LIBDIR =/s:=.*:= \%{_libdir}:" \
 	Makefile
 
-%make CC=gcc
+# no-macro-redefined is a workaround for flex bug
+# https://github.com/westes/flex/issues/155
+%make CC=%{__cc} LDFLAGS="%{optflags}" WARNINGS+=-Wno-macro-redefined
 
 %install
 %makeinstall_std PREFIX=/usr LIBDIR=%{_libdir}
