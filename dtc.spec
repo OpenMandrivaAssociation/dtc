@@ -1,10 +1,10 @@
 %define api 1
-%define major   4
+%define major 4
 %define libname %mklibname fdt %{api} %{major}
 %define devname %mklibname -d fdt %{api}
 
 Name:		dtc
-Version:	1.4.4
+Version:	1.4.5
 Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
