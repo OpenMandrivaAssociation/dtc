@@ -41,6 +41,13 @@ Provides:	fdt-devel = %{version}-%{release}
 %description -n	%{devname}
 This package provides development files for libfdt
 
+%package -n python2-%{name}
+Summary:	Python 2 bindings for %{name}
+Requires:	%{name} = %{EVRD}
+
+%description -n python2-%{name}
+This package provides python2 bindings for %{name}.
+
 %prep
 %setup -q
 %apply_patches
@@ -79,3 +86,6 @@ rm -f %{buildroot}/%{_bindir}/ftdump
 %doc GPL
 %{_libdir}/libfdt.so
 %{_includedir}/*
+
+%files -n python2-%{name}
+%{python_sitearch}/*
