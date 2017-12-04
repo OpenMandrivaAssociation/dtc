@@ -88,4 +88,4 @@ rm -f %{buildroot}/%{_bindir}/ftdump
 %{_includedir}/*
 
 %files -n python2-%{name}
-%{python_sitearch}/*
+%{python2_sitearch}/*
