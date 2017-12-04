@@ -12,11 +12,11 @@ License:	GPLv2+
 URL:		http://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.xz
 Patch0:		use-tx-as-the-type-specifier-instead-of-zx.patch
-
+Patch0:		checks-Use-proper-format-modifier-for-size_t.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python2)
 
 %description
 The Device Tree Compiler generates flattened Open Firmware style device trees
@@ -46,6 +46,8 @@ This package provides development files for libfdt
 %apply_patches
 
 %build
+%setup_compile_flags
+
 sed -i \
 	-e '/^CFLAGS =/s:=:+= %{optflags}:' \
 	-e '/^CPPFLAGS =/s:=:+=:' \
@@ -59,8 +61,8 @@ sed -i \
 %make CC=%{__cc} LDFLAGS="%{optflags}" WARNINGS+=-Wno-macro-redefined
 
 %install
-%makeinstall_std PREFIX=/usr LIBDIR=%{_libdir}
-rm -rf %{buildroot}/%{_libdir}/*.a
+%makeinstall_std SETUP_PREFIX=%{buildroot}%{_prefix} PREFIX=%{_prefix} LIBDIR=%{_libdir}
+find %{buildroot} -type f -name "*.a" -delete
 
 # we don't want or need ftdump and it conflicts with freetype-demos, so drop
 # it (rhbz 797805)
