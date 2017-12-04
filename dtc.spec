@@ -15,6 +15,8 @@ Patch0:		use-tx-as-the-type-specifier-instead-of-zx.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
+BuildRequires:	swig
+BuildRequires:	pkgconfig(python)
 
 %description
 The Device Tree Compiler generates flattened Open Firmware style device trees
