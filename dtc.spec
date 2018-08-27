@@ -4,7 +4,7 @@
 %define devname %mklibname -d fdt %{api}
 
 Name:		dtc
-Version:	1.4.5
+Version:	1.4.7
 Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
@@ -12,7 +12,6 @@ License:	GPLv2+
 URL:		http://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.xz
 Patch0:		use-tx-as-the-type-specifier-instead-of-zx.patch
-Patch1:		checks-Use-proper-format-modifier-for-size_t.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
