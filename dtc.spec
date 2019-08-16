@@ -42,6 +42,7 @@ This package provides development files for libfdt
 
 %package -n python2-%{name}
 Summary:	Python 2 bindings for %{name}
+Provides:	python2-libfdt = %{EVRD}
 Requires:	%{name} = %{EVRD}
 
 %description -n python2-%{name}
