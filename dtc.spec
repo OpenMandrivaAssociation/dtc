@@ -2,20 +2,20 @@
 %define major 4
 %define libname %mklibname fdt %{api} %{major}
 %define devname %mklibname -d fdt %{api}
+%define devnamestatic %mklibname -d fdt_static %{api}
 
 Name:		dtc
-Version:	1.4.7
-Release:	2
+Version:	1.6.0
+Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
 URL:		http://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.xz
-Patch0:		use-tx-as-the-type-specifier-instead-of-zx.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
-BuildRequires:	pkgconfig(python2)
+BuildRequires:	pkgconfig(python3)
 
 %description
 The Device Tree Compiler generates flattened Open Firmware style device trees
@@ -40,17 +40,27 @@ Provides:	fdt-devel = %{version}-%{release}
 %description -n	%{devname}
 This package provides development files for libfdt
 
-%package -n python2-%{name}
+%package -n	%{devnamestatic}
+Summary:	Development headers for device tree library
+Group:		System/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Provides:	fdt-static-devel = %{version}-%{release}
+
+%description -n	%{devnamestatic}
+This package provides development files for libfdt
+
+%package -n python-%{name}
 Summary:	Python 2 bindings for %{name}
-Provides:	python2-libfdt = %{EVRD}
+Provides:	python3-libfdt = %{EVRD}
 Requires:	%{name} = %{EVRD}
 
-%description -n python2-%{name}
-This package provides python2 bindings for %{name}.
+%description -n python-%{name}
+This package provides python3 bindings for %{name}.
 
 %prep
 %setup -q
 %autopatch -p1
+sed -i 's/python2/python3/' pylibfdt/setup.py
 
 %build
 %setup_compile_flags
@@ -68,12 +78,8 @@ sed -i \
 %make CC=%{__cc} LDFLAGS="%{optflags}" WARNINGS+=-Wno-macro-redefined
 
 %install
-%makeinstall_std SETUP_PREFIX=%{buildroot}%{_prefix} PREFIX=%{_prefix} LIBDIR=%{_libdir}
-find %{buildroot} -type f -name "*.a" -delete
-
-# we don't want or need ftdump and it conflicts with freetype-demos, so drop
-# it (rhbz 797805)
-rm -f %{buildroot}/%{_bindir}/ftdump
+%make_install DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
+             LIBDIR=%{_libdir} BINDIR=%{_bindir} INCLUDEDIR=%{_includedir} V=1
 
 %files
 %{_bindir}/*
@@ -87,5 +93,8 @@ rm -f %{buildroot}/%{_bindir}/ftdump
 %{_libdir}/libfdt.so
 %{_includedir}/*
 
-%files -n python2-%{name}
-%{python2_sitearch}/*
+%files -n %{devnamestatic}
+%{_libdir}/libfdt.a
+
+%files -n python-%{name}
+%{python3_sitearch}/*
