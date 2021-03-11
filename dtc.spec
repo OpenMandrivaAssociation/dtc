@@ -6,7 +6,7 @@
 
 Name:		dtc
 Version:	1.6.0
-Release:	1
+Release:	2
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
@@ -58,12 +58,11 @@ Requires:	%{name} = %{EVRD}
 This package provides python3 bindings for %{name}.
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 sed -i 's/python2/python3/' pylibfdt/setup.py
 
 %build
-%setup_compile_flags
+%set_build_flags
 
 sed -i \
 	-e '/^CFLAGS =/s:=:+= %{optflags}:' \
@@ -75,7 +74,7 @@ sed -i \
 
 # no-macro-redefined is a workaround for flex bug
 # https://github.com/westes/flex/issues/155
-%make CC=%{__cc} LDFLAGS="%{optflags}" WARNINGS+=-Wno-macro-redefined
+%make_build CC=%{__cc} LDFLAGS="%{optflags}" WARNINGS+=-Wno-macro-redefined
 
 %install
 %make_install DESTDIR=$RPM_BUILD_ROOT PREFIX=$RPM_BUILD_ROOT/usr \
