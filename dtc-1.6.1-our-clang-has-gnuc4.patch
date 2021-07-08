@@ -1,0 +1,12 @@
+diff -Naur dtc-1.6.1/util.h dtc-1.6.1.tpg/util.h
+--- dtc-1.6.1/util.h	2021-06-08 07:00:49.000000000 +0000
++++ dtc-1.6.1.tpg/util.h	2021-07-08 16:57:44.572231131 +0000
+@@ -13,7 +13,7 @@
+  */
+ 
+ #ifdef __GNUC__
+-#if __GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
++#if __GNUC__ >= 5 && !__clang__ || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4 && !__clang__)
+ #define PRINTF(i, j)	__attribute__((format (gnu_printf, i, j)))
+ #else
+ #define PRINTF(i, j)	__attribute__((format (printf, i, j)))

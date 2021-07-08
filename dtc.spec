@@ -5,13 +5,14 @@
 %define devnamestatic %mklibname -d fdt_static %{api}
 
 Name:		dtc
-Version:	1.6.0
-Release:	2
+Version:	1.6.1
+Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
 URL:		http://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.xz
+Patch0:		dtc-1.6.1-our-clang-has-gnuc4.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
@@ -22,7 +23,7 @@ The Device Tree Compiler generates flattened Open Firmware style device trees
 for use with PowerPC machines that lack an Open Firmware implementation and
 ARM/AArch64 devices that don't implement UEFI.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Device tree library
 Group:		System/Libraries
 
@@ -30,24 +31,24 @@ Group:		System/Libraries
 libfdt is a library to process Open Firmware style device trees on various
 architectures.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development headers for device tree library
 Group:		System/Libraries
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	fdt-devel = %{version}-%{release}
 
-%description -n	%{devname}
-This package provides development files for libfdt
+%description -n %{devname}
+This package provides development files for libfdt.
 
-%package -n	%{devnamestatic}
+%package -n %{devnamestatic}
 Summary:	Development headers for device tree library
 Group:		System/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	fdt-static-devel = %{version}-%{release}
 
 %description -n	%{devnamestatic}
-This package provides development files for libfdt
+This package provides development files for libfdt.
 
 %package -n python-%{name}
 Summary:	Python 2 bindings for %{name}
