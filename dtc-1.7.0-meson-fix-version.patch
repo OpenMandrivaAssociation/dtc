@@ -1,0 +1,26 @@
+diff --git a/libfdt/meson.build b/libfdt/meson.build
+index 240bdf4..240dab9 100644
+--- a/libfdt/meson.build
++++ b/libfdt/meson.build
+@@ -18,7 +18,7 @@ sources = files(
+ 
+ libfdt = library(
+   'fdt', sources,
+-  version: '1.6.0',
++  version: '1.7.0',
+   link_args: ['-Wl,--no-undefined', version_script],
+   link_depends: 'version.lds',
+   install: true,
+diff --git a/meson.build b/meson.build
+index 78251eb..d88cd9f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1,5 +1,5 @@
+ project('dtc', 'c',
+-  version: '1.6.0',
++  version: '1.7.0',
+   license: ['GPL2+', 'BSD-2'],
+   default_options: 'werror=true',
+ )
+-- 
+1.7.3.3

@@ -1,8 +1,8 @@
-%define api 1
-%define major 4
-%define libname %mklibname fdt %{api} %{major}
-%define devname %mklibname -d fdt %{api}
-%define devnamestatic %mklibname -d fdt_static %{api}
+%define major 1
+%define libname %mklibname fdt %{major}
+%define devname %mklibname -d fdt
+%define devnamestatic %mklibname -d -s fdt
+%define _disable_ld_no_undefined 1
 
 Name:		dtc
 Version:	1.7.0
@@ -13,6 +13,7 @@ License:	GPLv2+
 URL:		http://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.gz
 Patch0:		dtc-1.6.1-our-clang-has-gnuc4.patch
+Patch1:		dtc-1.7.0-meson-fix-version.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
@@ -29,6 +30,7 @@ ARM/AArch64 devices that don't implement UEFI.
 %package -n %{libname}
 Summary:	Device tree library
 Group:		System/Libraries
+Obsoletes:	%{mklibname fdt 1 4} < 1.7.0-1
 
 %description -n %{libname}
 libfdt is a library to process Open Firmware style device trees on various
@@ -40,6 +42,7 @@ Group:		System/Libraries
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	fdt-devel = %{version}-%{release}
+Obsoletes:	%{mklibname -d fdt 1} < 1.7.0-1
 
 %description -n %{devname}
 This package provides development files for libfdt.
@@ -49,8 +52,9 @@ Summary:	Development headers for device tree library
 Group:		System/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	fdt-static-devel = %{version}-%{release}
+Obsoletes:	%{mklibname -d fdt_static 1} < 1.7.0-1
 
-%description -n	%{devnamestatic}
+%description -n %{devnamestatic}
 This package provides development files for libfdt.
 
 %package -n python-%{name}
@@ -73,6 +77,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%{version}
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%{version}
 %ninja_install -C build
+
+rm -f %{buildroot}%{_bindir}/ftdump
 
 # (tpg) strip LTO from "LLVM IR bitcode" files
 check_convert_bitcode() {
@@ -108,11 +114,11 @@ done
 %{_bindir}/*
 
 %files -n %{libname}
-%{_libdir}/libfdt-%{version}.so
-%{_libdir}/libfdt.so.*
+%{_libdir}/libfdt.so.%{major}*
 
 %files -n %{devname}
 %doc GPL
+%{_libdir}/pkgconfig/*.pc
 %{_libdir}/libfdt.so
 %{_includedir}/*
 
