@@ -2,11 +2,10 @@
 %define libname %mklibname fdt %{major}
 %define devname %mklibname -d fdt
 %define devnamestatic %mklibname -d -s fdt
-%define _disable_ld_no_undefined 1
 
 Name:		dtc
 Version:	1.7.0
-Release:	2
+Release:	3
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
@@ -14,6 +13,8 @@ URL:		http://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.gz
 Patch0:		dtc-1.6.1-our-clang-has-gnuc4.patch
 Patch1:		dtc-1.7.0-meson-fix-version.patch
+# (tpg) upstream patch
+Patch100:	https://git.kernel.org/pub/scm/utils/dtc/dtc.git/patch/?id=71a8b8ef0adf01af4c78c739e04533a35c1dc89c.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
