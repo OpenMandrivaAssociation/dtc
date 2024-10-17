@@ -9,7 +9,7 @@ Release:	3
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
-URL:		http://devicetree.org/Device_Tree_Compiler
+URL:		https://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.gz
 Patch0:		dtc-1.6.1-our-clang-has-gnuc4.patch
 Patch1:		dtc-1.7.0-meson-fix-version.patch
