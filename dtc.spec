@@ -5,7 +5,7 @@
 
 Name:		dtc
 Version:	1.7.0
-Release:	3
+Release:	4
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
