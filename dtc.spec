@@ -2,26 +2,28 @@
 %define libname %mklibname fdt %{major}
 %define devname %mklibname -d fdt
 %define devnamestatic %mklibname -d -s fdt
+# We need to be able to link the python module
+# without linking to libpython
+%define _disable_ld_no_undefined 1
 
 Name:		dtc
-Version:	1.7.0
-Release:	4
+Version:	1.7.2
+Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
 URL:		https://devicetree.org/Device_Tree_Compiler
 Source0:	https://www.kernel.org/pub/software/utils/dtc/%{name}-%{version}.tar.gz
 Patch0:		dtc-1.6.1-our-clang-has-gnuc4.patch
-Patch1:		dtc-1.7.0-meson-fix-version.patch
 # (tpg) upstream patch
-Patch100:	https://git.kernel.org/pub/scm/utils/dtc/dtc.git/patch/?id=71a8b8ef0adf01af4c78c739e04533a35c1dc89c.patch
+#Patch100:	https://git.kernel.org/pub/scm/utils/dtc/dtc.git/patch/?id=71a8b8ef0adf01af4c78c739e04533a35c1dc89c.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	swig
 BuildRequires:	meson
 BuildRequires:	pkgconfig(yaml-0.1)
 BuildRequires:	pkgconfig(python)
-BuildRequires:	python3dist(setuptools-scm)
+BuildRequires:	python%{pyver}dist(setuptools-scm)
 
 %description
 The Device Tree Compiler generates flattened Open Firmware style device trees
