@@ -7,7 +7,7 @@
 %define _disable_ld_no_undefined 1
 
 Name:		dtc
-Version:	1.7.2
+Version:	1.8.1
 Release:	1
 Summary:	Device Tree Compiler
 Group:		Development/Other
