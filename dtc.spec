@@ -70,6 +70,11 @@ This package provides python3 bindings for %{name}.
 
 %prep
 %autosetup -p1
+# The SWIG interface still calls the Python 2 C API.
+sed -i \
+	-e 's/PyString_FromString/PyUnicode_FromString/g' \
+	-e 's/PyInt_AsLong/PyLong_AsLong/g' \
+	pylibfdt/libfdt.i
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%{version}
