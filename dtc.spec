@@ -8,7 +8,7 @@
 
 Name:		dtc
 Version:	1.8.1
-Release:	1
+Release:	2
 Summary:	Device Tree Compiler
 Group:		Development/Other
 License:	GPLv2+
